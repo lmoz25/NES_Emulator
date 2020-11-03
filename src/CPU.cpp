@@ -1,4 +1,5 @@
 #include "CPU.h"
+#include "CPU_Timer.h"
 
 namespace cpu {
 
@@ -19,6 +20,21 @@ void CPU::loadROM(std::string& path){
 }
 void CPU::processNextOpcode(){
     uint8_t opcode = memoryMap.read(program_counter);
+
+    // Start the timer
+    CPU_Timer timer(cycles);
+    doProcessOpcode(opcode);
+
+    std::unique_lock<std::mutex> lock(mtx);
+    // Wait for timer to wake this thread - stop waiting after 10 6502 cycles,
+    // no instruction should take that long
+    // TODO - maybe this shouldn't live here?
+    thread_waker.wait_until(lock, 
+        std::chrono::system_clock::now() + 10*CPU_Timer::6502_cycle_length_useconds);
+}
+
+void CPU::doProcessOpcode(const uint8_t& opcode) {
+// TODO refactor, maybe Builder/Factory to make operat(ion/or)?
     switch (opcode){
        /**
         * BRK opcodes
@@ -39,19 +55,19 @@ void CPU::processNextOpcode(){
         case 0x01:
             preIndexedIndirectOperation(operation::ORA);
             break;
-        
+
         case 0x05:
             zeroPageOperation(operation::ORA);
             break;
-        
+
         case 0x09:
             immediateOperation(operation::ORA);
             break;
-        
+
         case 0x0D:
             absoluteOperation(operation::ORA);
             break;
-        
+
         case 0x11:
             postIndexedIndirectOperation(operation::ORA);
             break;

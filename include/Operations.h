@@ -16,7 +16,7 @@ enum pFlag {
     NEGATIVE
 };
 
-typedef std::function<void(std::bitset<8>&, Register8&, Register8&)> Operator;
+typedef std::function<void(std::bitset<8>&, Register8&, Register8&)> Operation;
 
 namespace operation {
 

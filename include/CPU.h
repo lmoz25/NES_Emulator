@@ -19,6 +19,7 @@ public:
     void processNextOpcode();
 
 private:
+    void doProcessOpcode(const uint8_t& opcode);
     inline void setProcessorStatus(pFlag flag, bool value){
         processor_status.set(flag, value);
     }
@@ -32,48 +33,48 @@ private:
      * taken from the given memory access method
      */
 
-    inline void zeroPageOperation(Operator op, std::optional<Register8> reg = std::nullopt){
+    inline void zeroPageOperation(Operation op, std::optional<Register8> reg = std::nullopt){
         auto operand = std::bitset<8>(memoryMap.zeroPageRead(++program_counter));
         op(operand, reg ? reg.value() : accumulator, processor_status);
         program_counter++;
     }
 
-    inline void preIndexedIndirectOperation(Operator op, std::optional<Register8> reg = std::nullopt){
+    inline void preIndexedIndirectOperation(Operation op, std::optional<Register8> reg = std::nullopt){
         auto operand =
             std::bitset<8>(memoryMap.preIndexedIndirectRead(++program_counter, X.to_ulong()));
         op(operand, reg ? reg.value() : accumulator, processor_status);
         program_counter+=2;
     }
 
-    inline void immediateOperation(Operator op, std::optional<Register8> reg = std::nullopt){
+    inline void immediateOperation(Operation op, std::optional<Register8> reg = std::nullopt){
         auto operand =
             std::bitset<8>(memoryMap.immediateRead(++program_counter));
         op(operand, reg ? reg.value() : accumulator, processor_status);
         program_counter++;
     }
 
-    inline void absoluteOperation(Operator op, std::optional<Register8> reg = std::nullopt){
+    inline void absoluteOperation(Operation op, std::optional<Register8> reg = std::nullopt){
         auto operand =
             std::bitset<8>(memoryMap.absoluteRead(++program_counter));
         op(operand, reg ? reg.value() : accumulator, processor_status);
         program_counter+=2;
     }
 
-    inline void postIndexedIndirectOperation(Operator op, std::optional<Register8> reg = std::nullopt){
+    inline void postIndexedIndirectOperation(Operation op, std::optional<Register8> reg = std::nullopt){
         auto operand =
             std::bitset<8>(memoryMap.postIndexedIndirectRead(++program_counter, Y.to_ulong()));
         op(operand, reg ? reg.value() : accumulator, processor_status);
         program_counter+=2;
     }
     
-    inline void zeroPageIndexedOperation(Operator op, Register8 index, std::optional<Register8> reg = std::nullopt){
+    inline void zeroPageIndexedOperation(Operation op, Register8 index, std::optional<Register8> reg = std::nullopt){
         auto operand =
             std::bitset<8>(memoryMap.indexedRead(++program_counter, index.to_ulong()));
         op(operand, reg ? reg.value() : accumulator, processor_status);
         program_counter++;
     }
 
-    inline void indexedOperation(Operator op, Register8 index, std::optional<Register8> reg = std::nullopt){
+    inline void indexedOperation(Operation op, Register8 index, std::optional<Register8> reg = std::nullopt){
         auto operand =
             std::bitset<8>(memoryMap.indexedRead(++program_counter, index.to_ulong()));
         op(operand, reg ? reg.value() : accumulator, processor_status);
@@ -84,14 +85,14 @@ private:
      * taken from the given memory access method, then write the result back to that
      * memory location
      */
-    inline void zeroPageOperationWithWrite(Operator op, std::optional<Register8> reg = std::nullopt){
+    inline void zeroPageOperationWithWrite(Operation op, std::optional<Register8> reg = std::nullopt){
         auto operand = std::bitset<8>(memoryMap.zeroPageRead(++program_counter));
         op(operand, reg ? reg.value() : accumulator, processor_status);
         memoryMap.zeroPageWrite(program_counter, operand.to_ulong());
         program_counter++;
     }
 
-    inline void preIndexedIndirectOperationWithWrite(Operator op, std::optional<Register8> reg = std::nullopt){
+    inline void preIndexedIndirectOperationWithWrite(Operation op, std::optional<Register8> reg = std::nullopt){
         auto operand =
             std::bitset<8>(memoryMap.preIndexedIndirectRead(++program_counter,
                                                                 X.to_ulong()));
@@ -102,7 +103,7 @@ private:
         program_counter+=2;
     }
 
-    inline void immediateOperationWithWrite(Operator op, std::optional<Register8> reg = std::nullopt){
+    inline void immediateOperationWithWrite(Operation op, std::optional<Register8> reg = std::nullopt){
         auto operand =
             std::bitset<8>(memoryMap.immediateRead(++program_counter));
         op(operand, reg ? reg.value() : accumulator, processor_status);
@@ -110,7 +111,7 @@ private:
         program_counter++;
     }
 
-    inline void absoluteOperationWithWrite(Operator op, std::optional<Register8> reg = std::nullopt){
+    inline void absoluteOperationWithWrite(Operation op, std::optional<Register8> reg = std::nullopt){
         auto operand =
             std::bitset<8>(memoryMap.absoluteRead(++program_counter));
         op(operand, reg ? reg.value() : accumulator, processor_status);
@@ -118,7 +119,7 @@ private:
         program_counter+=2;
     }
 
-    inline void postIndexedIndirectOperationWithWrite(Operator op, std::optional<Register8> reg = std::nullopt){
+    inline void postIndexedIndirectOperationWithWrite(Operation op, std::optional<Register8> reg = std::nullopt){
         auto operand =
             std::bitset<8>(memoryMap.postIndexedIndirectRead(++program_counter,
                                                                 Y.to_ulong()));
@@ -129,7 +130,7 @@ private:
         program_counter+=2;
     }
     
-    inline void zeroPageIndexedOperationWithWrite(Operator op, Register8 index, std::optional<Register8> reg = std::nullopt){
+    inline void zeroPageIndexedOperationWithWrite(Operation op, Register8 index, std::optional<Register8> reg = std::nullopt){
         auto operand =
             std::bitset<8>(memoryMap.zeroPageIndexedRead(++program_counter,
                                                             index.to_ulong()));
@@ -140,7 +141,7 @@ private:
         program_counter++;
     }
 
-    inline void indexedOperationWithWrite(Operator op, Register8 index, std::optional<Register8> reg = std::nullopt){
+    inline void indexedOperationWithWrite(Operation op, Register8 index, std::optional<Register8> reg = std::nullopt){
         auto operand = std::bitset<8>(memoryMap.indexedRead(++program_counter, index.to_ulong()));
         op(operand, reg ? reg.value() : accumulator, processor_status);
         memoryMap.indexedWrite(program_counter, index.to_ulong(), operand.to_ulong());
@@ -148,7 +149,7 @@ private:
     }
 
     // Accumulator operation, read/write depending on operator.
-    inline void accumulatorOperation(Operator op){
+    inline void accumulatorOperation(Operation op){
         op(accumulator, accumulator, processor_status);
         program_counter++;
     }
