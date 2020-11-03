@@ -8,5 +8,6 @@ enum class AddressingMode {
     POST_INDEXED_INDIRECT,
     ZERO_PAGE_INDEXED,
     INDEXED,
-    IMPLIED
+    IMPLIED,
+    ACCUMULATOR
 };
