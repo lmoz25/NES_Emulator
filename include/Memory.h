@@ -10,8 +10,7 @@
 
 namespace memory {
 // Singleton class, allowing operations on RAM
-class MemoryMap{
-public:
+struct MemoryMap{
     MemoryMap();
 
     /**
@@ -29,13 +28,13 @@ public:
     void postIndexedIndirectWrite(uint16_t program_counter, uint8_t index, uint8_t value);
     void preIndexedIndirectWrite(uint16_t program_counter, uint8_t index, uint8_t value);
 
-    uint8_t absoluteRead(uint16_t program_counter) const;
-    uint8_t immediateRead(uint16_t program_counter) const;
-    uint8_t indexedRead(uint16_t program_counter, uint8_t index) const;
-    uint8_t zeroPageRead(uint16_t program_counter) const;
-    uint8_t zeroPageIndexedRead(uint16_t program_counter, uint8_t index) const;
-    uint8_t postIndexedIndirectRead(uint16_t program_counter, uint8_t index) const;
-    uint8_t preIndexedIndirectRead(uint16_t program_counter, uint8_t index) const;
+    uint8_t* absoluteRead(uint16_t program_counter) const;
+    uint8_t* immediateRead(uint16_t program_counter) const;
+    uint8_t* indexedRead(uint16_t program_counter, uint8_t index) const;
+    uint8_t* zeroPageRead(uint16_t program_counter) const;
+    uint8_t* zeroPageIndexedRead(uint16_t program_counter, uint8_t index) const;
+    uint8_t* postIndexedIndirectRead(uint16_t program_counter, uint8_t index) const;
+    uint8_t* preIndexedIndirectRead(uint16_t program_counter, uint8_t index) const;
 
     /** 
      * Functions for returning an address during a memory operation, where
@@ -50,7 +49,7 @@ public:
      */
 
     void write(uint16_t address, uint8_t value);
-    const uint8_t read(uint16_t address) const;
+    uint8_t* read(uint16_t address) const;
 
 private:
     uint16_t preIndexGetAddress(uint16_t program_counter, uint8_t index) const;
