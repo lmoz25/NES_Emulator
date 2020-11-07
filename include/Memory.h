@@ -8,6 +8,8 @@
 #define STACK_END 0x100
 #define ROM_START 0x8000 // takes up the rest of memory from here
 
+namespace memory {
+// Singleton class, allowing operations on RAM
 class MemoryMap{
 public:
     MemoryMap();
@@ -47,24 +49,14 @@ public:
      * Direct memory read/write
      */
 
-    void write(uint16_t address, uint8_t value){
-        memory[address] = value;
-    }
-    const uint8_t read(uint16_t address) const {
-        return memory[address];
-    }
+    void write(uint16_t address, uint8_t value);
+    const uint8_t read(uint16_t address) const;
 
 private:
-    uint16_t preIndexGetAddress(uint16_t program_counter, uint8_t index) const {
-        uint8_t address_byte_1 = (read(program_counter) + index) % UINT8_MAX;
-        uint8_t address_byte_2 = address_byte_1 + 1;
-        return read(address_byte_1 << 8) | read(address_byte_2);
-    }
+    uint16_t preIndexGetAddress(uint16_t program_counter, uint8_t index) const;
 
-    uint16_t postIndexGetAddress(uint16_t program_counter, uint8_t index) const {
-        uint8_t address_byte_1 = read(program_counter);
-        uint8_t address_byte_2 = address_byte_1 + 1;
-        return (read(address_byte_1 << 8) | read(address_byte_2)) + index;
-    }
-    std::array<uint8_t, MEMORY_SIZE> memory;
+    uint16_t postIndexGetAddress(uint16_t program_counter, uint8_t index) const;
+
+    static std::array<uint8_t, MEMORY_SIZE> memory_map;
 };
+} // memory::

@@ -1,7 +1,11 @@
 #include "Memory.h"
 
+namespace memory {
+
+std::array<uint8_t, MEMORY_SIZE> MemoryMap::memory_map;
+
 MemoryMap::MemoryMap() {
-    memory.fill(0);
+    memory_map.fill(0);
 }
 
 void MemoryMap::absoluteWrite(uint16_t program_counter, uint8_t value) {
@@ -72,3 +76,24 @@ uint16_t MemoryMap::indirectReadPointer(uint16_t program_counter) const{
         read(program_counter + 1) << 8 | read(program_counter);
     return read(address + 1 ) << 8 | read(address);
 }
+
+uint16_t MemoryMap::preIndexGetAddress(uint16_t program_counter, uint8_t index) const {
+    uint8_t address_byte_1 = (read(program_counter) + index) % UINT8_MAX;
+    uint8_t address_byte_2 = address_byte_1 + 1;
+    return read(address_byte_1 << 8) | read(address_byte_2);
+}
+
+uint16_t MemoryMap::postIndexGetAddress(uint16_t program_counter, uint8_t index) const {
+    uint8_t address_byte_1 = read(program_counter);
+    uint8_t address_byte_2 = address_byte_1 + 1;
+    return (read(address_byte_1 << 8) | read(address_byte_2)) + index;
+}
+
+void MemoryMap::write(uint16_t address, uint8_t value){
+    memory_map[address] = value;
+}
+
+const uint8_t MemoryMap::read(uint16_t address) const {
+    return memory_map[address];
+}
+} //memory::

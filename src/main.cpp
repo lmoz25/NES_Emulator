@@ -2,6 +2,22 @@
 #include <fstream>
 #include "CPU.h"
 
+
+void loadROM(std::string& path) {
+	memory::MemoryMap memory_map;
+
+    std::ifstream gamefile;
+    gamefile.open(path.c_str());
+    uint8_t ch = gamefile.get();
+    int i = ROM_START;
+    // Rest of memory is rom data
+    while (gamefile.good() && i < MEMORY_SIZE){
+        memory_map.write(i, ch);
+        ch = gamefile.get();
+    }
+    gamefile.close();
+}
+
 int main(int argc, char** argv) {
 	if(argc == 1){
 		std::cerr << "Usage: nes.exe path/to/rom" << std::endl;
@@ -9,7 +25,7 @@ int main(int argc, char** argv) {
 	}
 	std::string gamepath(argv[1]);
     cpu::CPU cpu;
-    cpu.loadROM(gamepath);
+    loadROM(gamepath);
 
 	while (true){
 		try{
