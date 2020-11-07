@@ -4,5 +4,5 @@
 #include <condition_variable>
 #include <mutex>
 
-std::condition_variable thread_waker;
-std::mutex mtx;
+static std::condition_variable thread_waker;
+static std::mutex mtx;

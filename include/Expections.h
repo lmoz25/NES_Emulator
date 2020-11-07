@@ -10,12 +10,12 @@ public:
     opcodeException(uint8_t opcode) : opcode_(opcode) {}
 
     char * what () {
-        char message[strlen(format) + 2];
         sprintf(message, format, opcode_);
         return message;
     }
 
 private:
-    static constexpr char* format = "Unexpected opcode 0x%x";
+    static constexpr char format[] = "Unexpected opcode 0x%x";
+    char message[strlen(format) + 2];
     uint8_t opcode_;
 };

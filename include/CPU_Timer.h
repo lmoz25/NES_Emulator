@@ -17,15 +17,17 @@
 
 class CPU_Timer {
 public:
-    CPU_Timer(uint8_t& cycles);
+    CPU_Timer(const uint8_t& cycles);
     ~CPU_Timer();
 
-    static constexpr float 6502_cycle_length_useconds = 0.5;
+    // Average cycle length of 6502 CPU, obviously variable irl
+    static constexpr float cpu_cycle_length_useconds = 0.5;
+    static volatile uint8_t extra_cycles;
 
 
 private:
     // Main loop
-    void time();
+    static void time(const uint8_t& cycles);
 
-    uint8_t cycles;
     std::unique_ptr<std::thread> runner;
+};

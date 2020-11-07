@@ -1,21 +1,10 @@
 #pragma once
 
 #include <bitset>
+#include <functional>
+/*
 
-typedef std::bitset<8> Register8;
-
-// Bit locations of flags in processor status register
-enum pFlag {
-    CARRY,
-    ZERO,
-    INTERRUPT,
-    DECIMAL,
-    BREAK,
-    ALWAYS1,
-    OVERFLOW,
-    NEGATIVE
-};
-
+namespace cpu { 
 typedef std::function<void(std::bitset<8>&, Register8&, Register8&)> Operation;
 
 namespace operation {
@@ -154,6 +143,8 @@ static inline void Increment(std::bitset<8>& operand, Register8&, Register8& pro
 static inline void CompareRegisterToMemory(std::bitset<8>& operand, Register8& reg, Register8& processor_status){
     processor_status.set(pFlag::CARRY, reg.to_ulong() >= operand.to_ulong());
     processor_status.set(pFlag::ZERO, reg == operand);
-    processor_status.set(pFlag::NEGATIVE, reg.to_ulong() < operand.to_ulong());Y
+    processor_status.set(pFlag::NEGATIVE, reg.to_ulong() < operand.to_ulong());
 }
 } // operation::
+} // cpu::
+*/
