@@ -16,4 +16,4 @@ jobs:
       working-directory: ${{runner.workspace}}
       shell: bash
       # Execute the build
-      run: cd ${{runner.workspace}} && ls && bash -x ./build.sh
+      run: cd ${{runner.workspace}}/NES_Emulator && ls && bash -x ./build.sh
