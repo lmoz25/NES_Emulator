@@ -54,7 +54,7 @@ void CPU::ASL(CPU& cpu_, Operand& operand) {
  * @param cpu_
  * @param operand
  */
-void CPU::PHP(CPU& cpu_, Operand& operand) {
+void CPU::PHP(CPU& cpu_, Operand&) {
     cpu_.pushToStack(static_cast<uint8_t>(cpu_.processor_status.to_ulong()));
     cpu_.program_counter++;
 }
