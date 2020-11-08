@@ -82,7 +82,7 @@ private:
     static void BRK(CPU& cpu_, Operand&);
     static void ORA(CPU& cpu_, Operand& operand);
     static void ASL(CPU& cpu_, Operand& operand);
-    static void PHP(CPU& cpu_, Operand& operand);
+    static void PHP(CPU& cpu_, Operand&);
     static void AND(CPU& cpu_, Operand& operand);
     static void BIT(CPU& cpu_, Operand& operand);
     static void ROL(CPU& cpu_, Operand& operand);
@@ -90,53 +90,53 @@ private:
     static void LSR(CPU& cpu_, Operand& operand);
     static void ADC(CPU& cpu_, Operand& operand);
     static void ROR(CPU& cpu_, Operand& operand);
-    static void BPL(CPU& cpu_, Operand& operand){}
-    static void CLC(CPU& cpu_, Operand& operand){}
-    static void JSL(CPU& cpu_, Operand& operand){}
-    static void BMI(CPU& cpu_, Operand& operand){}
-    static void SEC(CPU& cpu_, Operand& operand){}
-    static void RTI(CPU& cpu_, Operand& operand){}
-    static void JMP(CPU& cpu_, Operand& operand){}
-    static void BVC(CPU& cpu_, Operand& operand){}
-    static void CLI(CPU& cpu_, Operand& operand){}
-    static void RTS(CPU& cpu_, Operand& operand){}
-    static void PLA(CPU& cpu_, Operand& operand){}
-    static void BVS(CPU& cpu_, Operand& operand){}
-    static void SET(CPU& cpu_, Operand& operand){}
-    static void STA(CPU& cpu_, Operand& operand){}
-    static void STY(CPU& cpu_, Operand& operand){}
-    static void STX(CPU& cpu_, Operand& operand){}
-    static void DEY(CPU& cpu_, Operand& operand){}
-    static void TXA(CPU& cpu_, Operand& operand){}
-    static void SDA(CPU& cpu_, Operand& operand){}
-    static void SDX(CPU& cpu_, Operand& operand){}
-    static void BCC(CPU& cpu_, Operand& operand){}
-    static void TYA(CPU& cpu_, Operand& operand){}
-    static void TXS(CPU& cpu_, Operand& operand){}
-    static void LDY(CPU& cpu_, Operand& operand){}
-    static void LDA(CPU& cpu_, Operand& operand){}
-    static void LDX(CPU& cpu_, Operand& operand){}
-    static void TAY(CPU& cpu_, Operand& operand){}
-    static void BCS(CPU& cpu_, Operand& operand){}
-    static void CLV(CPU& cpu_, Operand& operand){}
-    static void TAX(CPU& cpu_, Operand& operand){}
-    static void TSX(CPU& cpu_, Operand& operand){}
-    static void CPY(CPU& cpu_, Operand& operand){}
-    static void CMP(CPU& cpu_, Operand& operand){}
-    static void DEC(CPU& cpu_, Operand& operand){}
-    static void INY(CPU& cpu_, Operand& operand){}
-    static void PLP(CPU& cpu_, Operand& operand){}
-    static void PHA(CPU& cpu_, Operand& operand){}
-    static void DEX(CPU& cpu_, Operand& operand){}
-    static void BNE(CPU& cpu_, Operand& operand){}
-    static void CLD(CPU& cpu_, Operand& operand){}
-    static void CPX(CPU& cpu_, Operand& operand){}
-    static void SBC(CPU& cpu_, Operand& operand){}
-    static void INC(CPU& cpu_, Operand& operand){}
-    static void INX(CPU& cpu_, Operand& operand){}
-    static void NOP(CPU& cpu_, Operand& operand){}
-    static void BEQ(CPU& cpu_, Operand& operand){}
-    static void SED(CPU& cpu_, Operand& operand){}
+    static void BPL(CPU& /*cpu_*/, Operand& /*operand*/){}
+    static void CLC(CPU& /*cpu_*/, Operand& /*operand*/){}
+    static void JSL(CPU& /*cpu_*/, Operand& /*operand*/){}
+    static void BMI(CPU& /*cpu_*/, Operand& /*operand*/){}
+    static void SEC(CPU& /*cpu_*/, Operand& /*operand*/){}
+    static void RTI(CPU& /*cpu_*/, Operand& /*operand*/){}
+    static void JMP(CPU& /*cpu_*/, Operand& /*operand*/){}
+    static void BVC(CPU& /*cpu_*/, Operand& /*operand*/){}
+    static void CLI(CPU& /*cpu_*/, Operand& /*operand*/){}
+    static void RTS(CPU& /*cpu_*/, Operand& /*operand*/){}
+    static void PLA(CPU& /*cpu_*/, Operand& /*operand*/){}
+    static void BVS(CPU& /*cpu_*/, Operand& /*operand*/){}
+    static void SET(CPU& /*cpu_*/, Operand& /*operand*/){}
+    static void STA(CPU& /*cpu_*/, Operand& /*operand*/){}
+    static void STY(CPU& /*cpu_*/, Operand& /*operand*/){}
+    static void STX(CPU& /*cpu_*/, Operand& /*operand*/){}
+    static void DEY(CPU& /*cpu_*/, Operand& /*operand*/){}
+    static void TXA(CPU& /*cpu_*/, Operand& /*operand*/){}
+    static void SDA(CPU& /*cpu_*/, Operand& /*operand*/){}
+    static void SDX(CPU& /*cpu_*/, Operand& /*operand*/){}
+    static void BCC(CPU& /*cpu_*/, Operand& /*operand*/){}
+    static void TYA(CPU& /*cpu_*/, Operand& /*operand*/){}
+    static void TXS(CPU& /*cpu_*/, Operand& /*operand*/){}
+    static void LDY(CPU& /*cpu_*/, Operand& /*operand*/){}
+    static void LDA(CPU& /*cpu_*/, Operand& /*operand*/){}
+    static void LDX(CPU& /*cpu_*/, Operand& /*operand*/){}
+    static void TAY(CPU& /*cpu_*/, Operand& /*operand*/){}
+    static void BCS(CPU& /*cpu_*/, Operand& /*operand*/){}
+    static void CLV(CPU& /*cpu_*/, Operand& /*operand*/){}
+    static void TAX(CPU& /*cpu_*/, Operand& /*operand*/){}
+    static void TSX(CPU& /*cpu_*/, Operand& /*operand*/){}
+    static void CPY(CPU& /*cpu_*/, Operand& /*operand*/){}
+    static void CMP(CPU& /*cpu_*/, Operand& /*operand*/){}
+    static void DEC(CPU& /*cpu_*/, Operand& /*operand*/){}
+    static void INY(CPU& /*cpu_*/, Operand& /*operand*/){}
+    static void PLP(CPU& /*cpu_*/, Operand& /*operand*/){}
+    static void PHA(CPU& /*cpu_*/, Operand& /*operand*/){}
+    static void DEX(CPU& /*cpu_*/, Operand& /*operand*/){}
+    static void BNE(CPU& /*cpu_*/, Operand& /*operand*/){}
+    static void CLD(CPU& /*cpu_*/, Operand& /*operand*/){}
+    static void CPX(CPU& /*cpu_*/, Operand& /*operand*/){}
+    static void SBC(CPU& /*cpu_*/, Operand& /*operand*/){}
+    static void INC(CPU& /*cpu_*/, Operand& /*operand*/){}
+    static void INX(CPU& /*cpu_*/, Operand& /*operand*/){}
+    static void NOP(CPU& /*cpu_*/, Operand& /*operand*/){}
+    static void BEQ(CPU& /*cpu_*/, Operand& /*operand*/){}
+    static void SED(CPU& /*cpu_*/, Operand& /*operand*/){}
 
     typedef uint8_t Opcode;
 
